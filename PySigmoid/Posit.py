@@ -545,28 +545,25 @@ class Posit(object):
         else:
             raise Exception("Arguments must be posit")
             
-    @staticmethod
-    def fused_sum(a):
-        if all(isinstance(x, Posit) for x in a):
-            r = reduce(operator.add, map(lambda x: Quire(x), a))
+    def fused_sum(self):
+        if all(isinstance(x, Posit) for x in self):
+            r = reduce(operator.add, map(lambda x: Quire(x), self))
             return Posit(r)
         else:
             raise Exception("Argument must be a list of posit")
 
-    @staticmethod
-    def fused_dot_product(a, b):
-        if all(isinstance(x, Posit) for x in (a + b)):
-            r = reduce(operator.add, map(lambda x, y: Quire(x) * Quire(y), a,b))
+    def fused_dot_product(self, b):
+        if all(isinstance(x, Posit) for x in (self + b)):
+            r = reduce(operator.add, map(lambda x, y: Quire(x) * Quire(y), self,b))
             return Posit(r)
         else:
             raise Exception("Arguments must be lists of posit")
             
-    @staticmethod
-    def fused_matmult(a, b):
+    def fused_matmult(self, b):
         zip_b = zip(*b)
         # uncomment next line if python 3 :
         zip_b = list(zip_b)
-        return [[fused_dot_product(row_a, col_b) for col_b in zip_b] for row_a in a]
+        return [[row_a.fused_dot_product(col_b) for col_b in zip_b] for row_a in self]
 
     def sigmoid(self):
         other = deepcopy(self)
