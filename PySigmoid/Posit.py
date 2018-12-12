@@ -5,6 +5,8 @@ from decimal import Decimal, getcontext
 from ctypes import c_ulonglong, c_double
 from .BitUtils import *
 from FixedPoint import *
+from functools import reduce
+import operator
 
 class Posit(object):
     def __init__(self, number = 0, nbits = None, es = None):
