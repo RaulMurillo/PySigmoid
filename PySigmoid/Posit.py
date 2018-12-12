@@ -252,7 +252,7 @@ class Posit(object):
         regime_length = regime + 2 if regime >= 0 else - regime + 1
 
         # overflow to maxpos underflow to minpos
-        if regime_length >= self.nbits + 1:
+        if regime_length >= self.nbits:
             p = Posit(nbits = self.nbits, es = self.es)
             p.set_bit_pattern(self.maxpos if regime >= 0 else self.minpos)
             if sign == 1:
